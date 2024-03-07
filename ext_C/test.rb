@@ -1,8 +1,8 @@
-require_relative 'lib'
+require_relative "lib"
 
 
 t1 = Process.clock_gettime(Process::CLOCK_MONOTONIC);
-200.bigFib
+p statvfs("/")
 
 t2 = Process.clock_gettime(Process::CLOCK_MONOTONIC);
 
