@@ -10,4 +10,6 @@ void Init_lib() {
     Init_m_hash();
     Init_m_statvfs();
     Init_m_sysinfo();
+    Init_m_utsname();
+    Init_m_x11();
 }

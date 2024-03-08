@@ -1,4 +1,5 @@
 require 'mkmf'
+$LDFLAGS << " -lX11"  
 
 create_header
 

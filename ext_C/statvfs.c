@@ -1,10 +1,12 @@
 #include <sys/statvfs.h>
 #include <sys/sysinfo.h>
+#include <sys/utsname.h>
+#include <X11/Xlib.h>
+
 #include <stdio.h>
 #include <math.h>
 
-int main() {
-
+void for_statvfs(){
     struct statvfs buf;
     statvfs("/", &buf);
 
@@ -35,12 +37,13 @@ int main() {
     );
 
 
+    
+}
+
+void for_sysinfo(){
     struct sysinfo buf2;
-    sysinfo(&buf2);
-  
-    //==========================
-    // SYSINFO only
-    //==========================
+    char status = sysinfo(&buf2);
+    if (status == -1) return 0;
 
     // check ram of system
     unsigned long long oneG = pow(1024, 3);
@@ -60,6 +63,72 @@ int main() {
 
     // Ter: gcc sysinfo.c && ./a.out
     // MOTE EXACTLY, Ter: ./a.out && cat /proc/loadavg
+}
+
+void for_utsname() {
+    struct utsname buf3;
+    char status3 = uname(&buf3);
+    if (status3 == -1) return 0;
+
+    printf("sys name : %s \n", buf3.sysname);
+    printf("node name : %s \n", buf3.nodename);
+    printf("release : %s \n", buf3.release);
+    printf("version : %s \n", buf3.version);
+    printf("machine : %s \n", buf3.machine);
+}
+
+int main() {
+    printf("=============statvfs==========================\n");
+    for_statvfs();
+  
+    //==========================
+    // SYSINFO only
+    printf("=============sysinfo==========================\n");
+    //==========================
+    for_sysinfo();
+    
+
+
+    //=======================utsname=====================
+    printf("=============utsname==========================\n");
+    for_utsname();
+    
+
+
+
+    //==============================================
+    //======use X11 ===================================
+    // HOW RUN? Ter: gcc -l X11 starvfs.c && ./a.out
+    //==============================================
+
+    Display *d;
+    Window w;
+    XEvent e;
+    int s;
+
+    if (!(d = XOpenDisplay(NULL))) {
+        fprintf(stderr, "Couldn't open display, but Arch is the best!\n");
+        exit(1);
+    }
+
+    s = DefaultScreen(d);
+    w = XCreateSimpleWindow(d, RootWindow(d,s), 0, 0, 410, 200, 0, 
+                            0, WhitePixel(d,s));
+    XSelectInput(d, w, ExposureMask | KeyPressMask);
+    XMapWindow(d,w);
+
+    while (1) {
+        XNextEvent(d, &e);
+        if (e.type == Expose) {
+            XDrawString(d, w, DefaultGC(d, s), 5, 15, "Arch is the best!", 17);
+        }
+    }
+
+    XCloseDisplay(d);
+
+    //HOW RUN? Ter: gcc -l X11 starvfs.c
+    //HOW RUN? Ter: gcc -lX11 starvfs.c
+
 
     return 0;
 }

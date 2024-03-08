@@ -90,7 +90,7 @@ INCFLAGS = -I. -I$(arch_hdrdir) -I$(hdrdir)/ruby/backward -I$(hdrdir) -I$(srcdir
 DEFS     = 
 CPPFLAGS = -DRUBY_EXTCONF_H=\"$(RUBY_EXTCONF_H)\"  $(DEFS) $(cppflags)
 CXXFLAGS = $(CCDLFLAGS)  $(ARCH_FLAG)
-ldflags  = -L. -fstack-protector-strong -rdynamic -Wl,-export-dynamic -Wl,--no-as-needed
+ldflags  = -L. -fstack-protector-strong -rdynamic -Wl,-export-dynamic -Wl,--no-as-needed -lX11
 dldflags = -Wl,--compress-debug-sections=zlib 
 ARCH_FLAG = 
 DLDFLAGS = $(ldflags) $(dldflags) $(ARCH_FLAG)
@@ -140,9 +140,9 @@ extout_prefix =
 target_prefix = 
 LOCAL_LIBS = 
 LIBS = $(LIBRUBYARG_SHARED)  -lm -lpthread  -lc
-ORIG_SRCS = lib.c m_array.c m_bool.c m_foobar.c m_function.c m_hash.c m_music.c m_number.c m_statvfs.c m_sysinfo.c statvfs.c
+ORIG_SRCS = lib.c m_array.c m_bool.c m_foobar.c m_function.c m_hash.c m_music.c m_number.c m_statvfs.c m_sysinfo.c m_utsname.c m_x11.c statvfs.c
 SRCS = $(ORIG_SRCS) 
-OBJS = lib.o m_array.o m_bool.o m_foobar.o m_function.o m_hash.o m_music.o m_number.o m_statvfs.o m_sysinfo.o statvfs.o
+OBJS = lib.o m_array.o m_bool.o m_foobar.o m_function.o m_hash.o m_music.o m_number.o m_statvfs.o m_sysinfo.o m_utsname.o m_x11.o statvfs.o
 HDRS = $(srcdir)/extconf.h $(srcdir)/lib.h
 LOCAL_HDRS = 
 TARGET = lib
