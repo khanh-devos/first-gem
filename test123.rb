@@ -1,0 +1,4 @@
+require "etc"
+
+
+Etc.name
